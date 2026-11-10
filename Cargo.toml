@@ -1,0 +1,44 @@
+[workspace]
+members = ["crates/propar-core", "crates/propar-catalog", "crates/propar-embedded"]
+resolver = "3"
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.85"
+license = "MIT"
+
+[workspace.dependencies]
+propar-core = { version = "0.1.0", path = "crates/propar-core", default-features = false }
+propar-catalog = { version = "0.1.0", path = "crates/propar-catalog", default-features = false }
+propar-embedded = { version = "0.1.0", path = "crates/propar-embedded", default-features = false }
+
+[package]
+name = "propar"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+description = "Bronkhorst ProPar protocol codec and blocking and asynchronous FLOW-BUS clients"
+license.workspace = true
+
+[features]
+default = ["blocking", "serial", "catalog-metadata"]
+std = ["propar-core/std"]
+catalog-metadata = ["propar-catalog/metadata"]
+embedded-async = ["dep:propar-embedded"]
+blocking = ["std", "dep:maybe-async-cfg"]
+async = ["std", "dep:maybe-async-cfg", "dep:tokio"]
+serial = ["blocking", "dep:serialport"]
+async-serial = ["async", "dep:tokio-serial"]
+
+[dependencies]
+propar-core.workspace = true
+propar-catalog.workspace = true
+propar-embedded = { workspace = true, optional = true }
+maybe-async-cfg = { version = "0.2.5", default-features = false, optional = true }
+serialport = { version = "4.7", default-features = false, optional = true }
+tokio = { version = "1", features = ["io-util", "time"], optional = true }
+tokio-serial = { version = "5.4", default-features = false, optional = true }
+
+[dev-dependencies]
+tokio = { version = "1", features = ["rt", "macros", "io-util", "time", "test-util"] }

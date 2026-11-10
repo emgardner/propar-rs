@@ -1,0 +1,14 @@
+[package]
+name = "propar-catalog"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+description = "Allocation-free FlowDDE parameter lookup with optional descriptive metadata"
+
+[features]
+default = []
+metadata = []
+
+[dependencies]
+propar-core.workspace = true

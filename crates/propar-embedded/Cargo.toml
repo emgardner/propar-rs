@@ -1,0 +1,15 @@
+[package]
+name = "propar-embedded"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+description = "Allocation-free async ProPar client for embedded I/O and HAL timers"
+
+[dependencies]
+propar-core.workspace = true
+embedded-io-async = { version = "0.7", default-features = false }
+embedded-hal-async = { version = "1.0", default-features = false }
+
+[dev-dependencies]
+tokio = { version = "1", features = ["rt", "macros", "time", "test-util"] }
